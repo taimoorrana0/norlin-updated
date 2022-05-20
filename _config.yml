@@ -3,8 +3,8 @@
 title: Bhaskar
 logo: '/images/logo.png'
 description: Hacker | Developer | Trader | Enterpruner.
-baseurl: "http://bhaskarvilles.com" # The subpath of your site, e.g. /blog
-url: "http://bhaskarvilles.com" # The base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # The subpath of your site, e.g. /blog
+url: "" # The base hostname & protocol for your site, e.g. http://example.com
 
 
 #-------------------------------
