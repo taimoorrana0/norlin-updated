@@ -2,7 +2,7 @@
 layout: post
 title:  The Fancy Title
 description: Description of the Post
-date:   2022-05-22 13:55:55 +0530
+date:   2022-05-18 13:55:55 +0530
 image:  '/images/avatar.jpg'
 tags:   [Tags, Tag]
 featured: true
