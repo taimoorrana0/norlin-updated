@@ -1,10 +1,12 @@
 ---
+
 layout: post
 title:  Filebase: Building Web3 with Web3
 description: Filebase: Building Web3 with Web3
 date:   2022-05-20 15:01:35 +0530
 image:  '/images/filebase.png'
 tags:   [Dnet, Web3, IPFS]
+
 ---
 
 Decentralized storage offers a different way of thinking about how to store and access your information. In this model, data is distributed across nodes that are geographically distributed and connected through a peer-to-peer network. This is very different from a traditional cloud model where data is siloed into regions that are prone to outages, and failure. By contrast, peer-to-peer networks are resilient to catastrophic events such as natural disasters, fires, or infrastructure compromise.
