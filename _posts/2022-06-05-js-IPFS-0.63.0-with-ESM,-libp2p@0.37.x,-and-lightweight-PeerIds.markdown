@@ -1,0 +1,89 @@
+---
+layout:  post
+title:  js-IPFS 0.63.0 with ESM, libp2p@0.37.x, and lightweight PeerIds
+description:  js-IPFS 0.63.0 with ESM, libp2p@0.37.x, and lightweight PeerIds
+date:  2021-06-05 08:24:35 +0300
+image:  '/images/rename.webp'
+tags:  [Decentralizednet, Web3, IPFS]
+---
+#Highlights
+
+    switches to ESM only, upgrades to libp2p 0.37.x and brings lightweight PeerIds
+
+js-IPFS@0.63.0 is rocketing forward with major improvements to its foundations along with many small bug fixes and performance improvements!
+#🧱 ESM
+
+A module system lets us organise our code in way that makes sense for our application. Without a module system, everything is one big file and/or namespace and total chaos.
+
+ECMAScript Modules
+
+are the module system for JavaScript.
+
+Other modules systems have been implemented in the past (e.g., CommonJS
+, RequireJS
+
+, but these have all been userland solutions to the problem of how to organize your JavaScript; none of them have ever been part of the language.
+
+This means in order to take advantage of a module system, you need to run your code through a bundler such as webpack
+or esbuild
+
+, which introduces a build step and means you can't just run a js file. We've got so used to needing the platform (e.g., node) to support a userland module system (e.g., CommonJS) or needing all this additional tooling that adds complexity and makes things slow.
+
+The beginning of change started in 2015 with ES6
+, which among other things introduced the module specification.
+
+By now the import/export syntax for modules should be familiar. It's used in TypeScript
+, React and other environments, mostly via transpilation by such tools as babel
+
+Back in 2018, FireFox shipped v60, which meant all major browsers supported ES modules. Node.js was the final platform that needed support. Node.js actually released support behind a flag in v8.5.0 in 2017 but it was only with v13.2.0 in 2019 that it came out from behind that flag and with v14.8.0 in 2021 that top-level await was also enabled by default.
+
+With v16 becoming Active LTS in October last year it meant we were finally able
+
+to upgrade to ESM an embrace the bright new bundlerless future.
+
+With libp2p@0.37.x and ipfs@0.63.x both modules are published exclusively as ESM.
+
+There are migration guides available for libp2p and ipfs.
+
+If you are running in a CJS environment (e.g., node before v14.8), you'll need to either convert your codebase to ESM, or use the dynamic import function
+
+to load ipfs and/or libp2p. Note that ipfs and libp2p are only tested fully on Active and Current LTS versions, which is v16+ at the time of writing.
+
+#libp2p in TypeScript
+
+With the libp2p@0.37.x release, libp2p has been entirely rewritten from the ground up in TypeScript.
+
+This has given us a more stable and predictable base on which to build next generation distributed projects, as well as better support for automated tooling, code completion, docs and a generally greatly improved developer experience.
+
+A large scale re-evaluation of the exposed interfaces has taken place which is a breaking change. Please see the libp2p@0.37.x migration guide
+
+for any changes you will need to make to your application.
+
+#lightweight PeerIds
+
+The PeerId
+is a core concept of libp2p. PeerIds let us identify remote peers and verify data those peers send to us, since they are either a hash of a public key in the case of an RSA (opens new window) derived PeerId, or the public key itself in the case of an Ed25519
+
+ PeerId.
+
+Prior to libp2p@0.37.x, the PeerId concept was implemented by the peer-id
+module. The class exported by this module was capable of all sorts of encryption-related operations, some of which required heavyweight JavaScript modules such as node-forge (opens new window) since the web-crypto API
+
+lacks certain algorithms and operations that are used by the libp2p/IPFS ecosystems.
+
+Depending on these modules carries a significant cost for browser bundles, and the operations they are supposed to support are not used in places like ipfs-http-client rendering the peer-id module unsuitable for use in lightweight front-end applications that may only orchestrate a remote IPFS node.
+
+This has meant that PeerIds are represented as strings throughout the IPFS core-api
+which makes them very hard to reason about in parts of the API where a string could be a PeerId, a multiaddr (opens new window), an IPNS Name
+
+or something else.
+
+With the new @libp2p/peer-id module, this is no longer the case and implementations of the PeerId interface
+
+are essentially thin wrappers around Uint8Arrays that contain the serialized forms of the public and/or private keys, so we can now pass them back to front-end code and have all the benefits of type safety.
+
+The cryptographic operations and the heavy deps they require are now encapsulated within the @libp2p/crypto
+
+module which in general is not used by front end code.
+
+This is also a breaking change. Please see the ipfs@0.63.x upgrade for any changes you will need to make to your application.
